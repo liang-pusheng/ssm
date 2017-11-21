@@ -32,14 +32,15 @@
 
 1.全局配置文件和属性文件
 - jdbc属性文件
-
-`driver=com.mysql.jdbc.Driver
+```
+driver=com.mysql.jdbc.Driver
 url=jdbc:mysql://127.0.0.1:3306/数据库名
 username=用户名
-password=密码`
+password=密码
+```
 - logback配置文件
-
-`<?xml version="1.0" encoding="UTF-8" ?>
+```
+<?xml version="1.0" encoding="UTF-8" ?>
 <configuration debug="true">
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are  by default assigned the type
@@ -52,5 +53,6 @@ password=密码`
     <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
-</configuration>`
+</configuration>
+```
 

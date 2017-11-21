@@ -4,8 +4,12 @@
 ***
 #### 需要的包
 ###### 1.Spring相关的包
-- Spring
-- mybatis
+- Spring-core
+- Spring-beans
+- Spring-context
+- Spring-aop
+- Spring-tx
+- Spring-test
 
 ###### 2.SpringMVC相关的包
 

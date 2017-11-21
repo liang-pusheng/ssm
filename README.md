@@ -24,4 +24,17 @@
 ###### 5.数据库相关的包
 - mysql-connector-java
 - c3p0
+
 总的看来需要的包并不是特别的多，如果需要使用其他功能的话，如缓存，添加相应的包即可。
+***
+#### 具体步骤
+整合的过程是：mybatis和Spring整合，然后在将Spring和SpringMVC整合
+1.全局配置文件和属性文件
+- jdbc属性文件
+`
+#不能存在任何的空格
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://127.0.0.1:3306/seckill
+username=root
+password=root
+`

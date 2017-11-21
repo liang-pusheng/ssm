@@ -29,12 +29,32 @@
 ***
 #### 具体步骤
 整合的过程是：mybatis和Spring整合，然后在将Spring和SpringMVC整合
+
 1.全局配置文件和属性文件
 - jdbc属性文件
+
 `
-#不能存在任何的空格
 driver=com.mysql.jdbc.Driver
-url=jdbc:mysql://127.0.0.1:3306/seckill
-username=root
-password=root
+url=jdbc:mysql://127.0.0.1:3306/数据库名
+username=用户名
+password=密码
 `
+- logback配置文件
+
+`
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are  by default assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
+`
+

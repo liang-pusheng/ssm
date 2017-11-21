@@ -4,11 +4,13 @@
 ***
 #### 需要的包
 1.Spring相关的包
--Spring-core
--Spring-context
--Spring-beans
--Spring-aop
+-Spring
+-mybatis
+
 2.SpringMVC相关的包
+
 3.mybatis相关的包
+
 4.日志相关的包
+
 5.数据库相关的包

@@ -4,17 +4,24 @@
 ***
 #### 需要的包
 ###### 1.Spring相关的包
-- Spring-core
-- Spring-beans
-- Spring-context
-- Spring-aop
-- Spring-tx
-- Spring-test
-
+- spring-core
+- spring-beans
+- spring-context
+- spring-aop
+- spring-tx
+- spring-test
+- spring-expression
 ###### 2.SpringMVC相关的包
-
+- spring-web
+- spring-webmvc
 ###### 3.mybatis相关的包
-
+- mybatis
+- mybatis-spring
 ###### 4.日志相关的包
-
+- logback-core
+- logback-classic
+- slf4j-api
 ###### 5.数据库相关的包
+- mysql-connector-java
+- c3p0
+总的看来需要的包并不是特别的多，如果需要使用其他功能的话，如缓存，添加相应的包即可。

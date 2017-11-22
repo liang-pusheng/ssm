@@ -149,4 +149,39 @@ password=密码
 </beans>
 ```
 需要注意一点的就是事务的使用，当只有一个数据库操作时，其实是不需要使用事务的。
-5.
+
+5.最后就是Spring和SpringMVC的整合了，其实这个是非常简单的，因为本身SpringMVC就是Spring的一部分，配置文件如下：
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置SpringMVC-->
+    <!--开启SpringMVC注解模式-->
+    <!-- 目的是可以简化配置：
+        （1）自动注册DefaultAnnotationHandlerMappoing,AnnotationMehtodHandlerAdapter
+        （2）提供一系列数据绑定、数字日期转化（format） @NumberFormat，@DataTimeFormat,xml,json默认读写支持
+    -->
+    <mvc:annotation-driven/>
+
+    <!-- 处理静态资源
+        （1）加入允许对静态资源的处理：js gif png
+        （2）允许使用“/”做整体映射
+    -->
+    <mvc:default-servlet-handler/>
+
+    <!--视图解析-->
+    <bean id="internalResource" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/><!--使用到jsp的标签-->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--扫描web相关的bean-->
+    <context:component-scan base-package="org.demo.web"/>
+</beans>
+```
+***
+

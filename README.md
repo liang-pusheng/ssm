@@ -77,7 +77,19 @@ password=密码
     </settings>
 </configuration>
 ```
-3.Spring和mybatis的整合配置文件spring-dao.xml，因为Spring和mybatis整合到一起，所以对数据库的管理就由mybatis交给了Spring
+3.mybatis映射文件
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seckill.dao.SeckillDao">
+    <!--目的：为DAO接口方法提供sql语句配置-->
+    <select id="queryById" parameterType="long" resultType="Demo">
+        select * from demo where id = #{id}
+    </select>
+```
+4.Spring和mybatis的整合配置文件spring-dao.xml，因为Spring和mybatis整合到一起，所以对数据库的管理就由mybatis交给了Spring
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -126,7 +138,7 @@ password=密码
     </bean>
 </beans>
 ```
-4.配置Spring对service层代码的管理
+5.配置Spring对service层代码的管理
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -150,7 +162,7 @@ password=密码
 ```
 需要注意一点的就是事务的使用，当只有一个数据库操作时(比如只删除或者只查询)，其实是不需要使用事务的。
 
-5.最后就是Spring和SpringMVC的整合了，其实这个是非常简单的，因为本身SpringMVC就是Spring的一部分，配置文件如下：
+6.最后就是Spring和SpringMVC的整合了，其实这个是非常简单的，因为本身SpringMVC就是Spring的一部分，配置文件如下：
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"

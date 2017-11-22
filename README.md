@@ -77,7 +77,7 @@ password=密码
     </settings>
 </configuration>
 ```
-3.Spring和mybatis的整合配置文件spring-dao.xml，因为Spring和mybatis整合到一起，所以对数据的管理就由mybatis交给了Spring
+3.Spring和mybatis的整合配置文件spring-dao.xml，因为Spring和mybatis整合到一起，所以对数据库的管理就由mybatis交给了Spring
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -126,4 +126,28 @@ password=密码
     </bean>
 </beans>
 ```
+4.配置Spring对service层代码的管理
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!--扫描service包下所有使用注解的类型-->
+    <context:component-scan base-package="org.demo.service"/>
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置基于注解的声明式事务，默认使用注解来管理事务行为-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
+```
+需要注意一点的就是事务的使用，当只有一个数据库操作时，其实是不需要使用事务的。
+
+5.

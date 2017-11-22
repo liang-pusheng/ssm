@@ -55,4 +55,75 @@ password=密码
     </root>
 </configuration>
 ```
+2.mybatis全局配置文件mybatis-config.xml
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--配置全局属性-->
+    <settings>
+        <!--使用jdbc的getGeneratedKeys 获取数据库自增主键值-->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!--使用列名替换别名  默认：true
+            select name as title from table
+            name是列名 title是实体类对应name的属性
+        -->
+        <setting name="useColumnLabel" value="true"/>
+        <!--开启驼峰命名转换：Table(create_time)->entity(createTime)-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+</configuration>
+```
+3.Spring和mybatis的整合配置文件spring-dao.xml，因为Spring和mybatis整合到一起，所以对数据的管理就由mybatis交给了Spring
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!--Spring配置整合mybatis-->
+
+    <!--配置数据库相关参数的properties属性-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--配置数据库连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--配置连接池属性-->
+   
+        <!--配置c3p0连接池的私有属性-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!--关闭连接后不自动commit-->
+        <property name="autoCommitOnClose" value="false"/>
+        <!--获取连接超时时间-->
+        <property name="checkoutTimeout" value="3000"/>
+        <!--当连接失败重试次数-->
+        <property name="acquireRetryAttempts" value="2"/>
+    </bean>
+
+    <!--配置SqlSessionFactory对象-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置mybatis全局配置文件：mybatis-config.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描entity包 使用别名-->
+        <property name="typeAliasesPackage" value="org.demo.entity"/>
+        <!--扫描sql配置文件：包含sql语句的xml文件(实体映射文件)-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!--配置扫描DAO接口包，动态实现DAO接口，注入到Spring容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--配置扫描DAO接口包-->
+        <property name="basePackage" value="org.demo.dao"/>
+    </bean>
+</beans>
+```
 
